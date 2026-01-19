@@ -1,0 +1,71 @@
+ES 1)
+
+SELECT *
+FROM clienti
+WHERE nome = 'Mario';
+----------------------------------
+
+ES 2)
+
+SELECT nome, cognome
+FROM clienti
+WHERE anno_di_nascita = 1982;
+
+----------------------------------
+
+ES 3)
+
+SELECT COUNT(*) AS numero_fatture_iva_20
+FROM fatture
+WHERE iva = 20;
+
+
+----------------------------------
+
+ES 5)
+
+SELECT *
+FROM prodotti
+WHERE EXTRACT(YEAR FROM data_attivazione) = 2017
+  AND (in_produzione = TRUE OR in_commercio = TRUE);
+
+----------------------------------
+
+ES 6)
+
+SELECT
+  f.numero_fattura,
+  f.importo,
+  f.iva,
+  f.data_fattura,
+  fo.denominazione AS nome_fornitore
+FROM fatture f
+JOIN fornitori fo ON fo.numero_fornitore = f.numero_fornitore;
+
+----------------------------------
+
+ES 7)
+
+SELECT
+  EXTRACT(YEAR FROM data_fattura) AS anno,
+  COUNT(*) AS conteggio_fatture
+FROM fatture
+WHERE iva = 20
+GROUP BY EXTRACT(YEAR FROM data_fattura)
+ORDER BY anno;
+
+----------------------------------
+
+ES 8)
+
+SELECT
+  EXTRACT(YEAR FROM data_fattura) AS anno,
+  COUNT(*) AS conteggio_fatture,
+  SUM(importo) AS somma_importi
+FROM fatture
+GROUP BY EXTRACT(YEAR FROM data_fattura)
+ORDER BY anno;
+
+
+----------------------------------
+
